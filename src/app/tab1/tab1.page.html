@@ -1,0 +1,189 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="ion-padding-top">
+    <ion-title mode="md" color="tertiary">WhatsApp</ion-title>
+    <ion-buttons slot="end" mode="md">
+      <ion-button>
+        <span class="material-symbols-outlined">camera_alt</span>
+      </ion-button>
+      <ion-button id="drop-down">
+        <span class="material-symbols-outlined">more_vert</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- popover -->
+  <ion-popover trigger="drop-down" size="auto" #myPopover>
+    <ng-template>
+      <ion-content>
+        <ion-item lines="none" [button]="true">
+          <span class="material-symbols-outlined" slot="start">
+            group_add
+          </span>
+          <ion-label>New group</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" [button]="true">
+          <span class="material-symbols-outlined" slot="start">
+            brand_awareness
+          </span>
+          <ion-label>New brodcast</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" [button]="true">
+          <span class="material-symbols-outlined" slot="start"> devices </span>
+          <ion-label>Linked devices</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" [button]="true">
+          <span class="material-symbols-outlined" slot="start"> star </span>
+          <ion-label>Starred messages</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" [button]="true">
+          <span class="material-symbols-outlined" slot="start">
+            credit_card
+          </span>
+          <ion-label>Payments</ion-label>
+        </ion-item>
+
+        <ion-item
+          lines="none"
+          [button]="true"
+          routerLink="/settings"
+          (click)="myPopover.dismiss()"
+        >
+          <span class="material-symbols-outlined" slot="start"> settings </span>
+          <ion-label>Settings</ion-label>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+
+
+  <!-- search bar -->
+
+  <ion-list>
+    <ion-item lines="none" class="searchBar">
+          <div class="lottie-animation" id="lottie-search"></div>
+          <ion-input placeholder="Ask Meta AI or Search"></ion-input>
+    </ion-item>
+  </ion-list>
+
+
+  <!-- chip -->
+
+  <ion-item lines="none">
+    <ion-chip
+      [color]="selectedChip === 'All' ? 'primary' : ''"
+      (click)="selectChip('All')"
+    >
+      All
+    </ion-chip>
+
+    <ion-chip
+      [color]="selectedChip === 'Unread' ? 'primary' : ''"
+      (click)="selectChip('Unread')"
+    >
+      Unread
+    </ion-chip>
+
+    <ion-chip
+      [color]="selectedChip === 'Favourites' ? 'primary' : ''"
+      (click)="selectChip('Favourites')"
+    >
+      Favourites
+    </ion-chip>
+
+    <ion-chip
+      [color]="selectedChip === 'Groups' ? 'primary' : ''"
+      (click)="selectChip('Groups')"
+    >
+      Groups
+    </ion-chip>
+
+    <ion-chip (click)="selectChip('Add')">
+      <span
+        class="material-symbols-outlined"
+        [style.color]="selectedChip === 'Add' ? 'var(--ion-color-primary)' : 'inherit'"
+      >
+        add
+      </span>
+    </ion-chip>
+  </ion-item>
+
+
+
+  <ion-list>
+      <!-- locked and archive chat -->
+    <ion-item lines="none" class="align-items-start">
+      <span class="material-symbols-outlined icon" slot="start">lock</span>
+      <ion-label>
+        <h2 class="label">Locked chats</h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none" class="align-items-start">
+      <span class="material-symbols-outlined icon" slot="start">archive</span>
+      <ion-label>
+        <h2 class="label">Archived</h2>
+      </ion-label>
+    </ion-item>
+
+    <!-- chat item  -->
+
+    <ion-item
+      *ngFor="let contact of contacts"
+      lines="none"
+      class="align-items-start"
+      (click)="navigateToChat(contact)">
+      <ion-avatar slot="start">
+        <img [src]="contact.avatar" alt="{{ contact.name }}" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ contact.name }}</h2>
+        <p>
+          <ion-icon
+            *ngIf="contact.yourMessage"
+            name="checkmark-done-outline"
+            class="ion-icon"
+          ></ion-icon>
+          {{ contact.lastMessage }}
+        </p>
+      </ion-label>
+      <ion-label slot="end" class="ion-text-end">
+        <p [ngClass]="{'ion-text-success': contact.unread}">
+          {{ contact.lastSeen }}
+        </p>
+        <ion-badge *ngIf="contact.unread">2</ion-badge>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- message  -->
+
+  <div class="ion-text-center ion-margin-vertical">
+    <ion-note>
+      <span class="material-symbols-outlined" style="font-size: 16px"
+        >lock</span
+      >
+      Your personal messages are
+      <ion-text color="primary">end-to-end encrypted</ion-text>
+    </ion-note>
+  </div>
+  <div class="ion-padding ion-margin"></div>
+
+  <!-- fabs  -->
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" class="ion-margin-bottom" size="small">
+      <img src="../../assets/meta-ai-logo.jpg" width="20px" />
+    </ion-fab-button>
+    <ion-fab-button>
+      <span class="material-symbols-outlined" style="font-size: 24px"
+        >chat</span
+      >
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

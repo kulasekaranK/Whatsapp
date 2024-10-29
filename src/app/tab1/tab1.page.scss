@@ -1,0 +1,28 @@
+ion-badge{
+  border-radius: 50%;
+  font-weight: lighter;
+  --padding-start:7px;
+  --padding-end:7px;
+  --padding-top:3px;
+  margin-top: 5px;
+}
+.ion-text-success{
+  color: var(--ion-color-primary);
+}
+ion-input{
+  margin-left: 10px;
+}
+.searchBar{
+    --background: var(--ion-color-success);
+    border-radius: 20px;
+    margin: 0 17px;
+  }
+.lottie-animation{
+  width: 25px;
+}
+.icon{
+  margin-left: 14px;
+}
+.label{
+  margin-left: 10px;
+}
