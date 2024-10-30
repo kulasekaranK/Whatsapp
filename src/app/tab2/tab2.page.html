@@ -2,13 +2,13 @@
   <ion-toolbar class="ion-padding-top">
     <ion-title mode="md">Updates</ion-title>
     <ion-buttons slot="end" mode="md">
-      <ion-button>
+      <ion-button (click)="camera()">
         <span class="material-symbols-outlined">camera_alt</span>
       </ion-button>
       <ion-button>
         <span class="material-symbols-outlined"> search </span>
       </ion-button>
-      <ion-button>
+      <ion-button (click)="presentPopover($event)">
         <span class="material-symbols-outlined">more_vert</span>
       </ion-button>
     </ion-buttons>
@@ -16,9 +16,29 @@
 </ion-header>
 
 <ion-content>
+  <ion-popover #popover size="auto">
+    <ng-template>
+      <ion-content>
+        <ion-list>
+          <ion-item lines="none" [button]="true">
+          <span class="material-symbols-outlined" slot="start"> lock </span>
+          <ion-label>Status privacy</ion-label>
+        </ion-item>
+        <ion-item lines="none" [button]="true">
+          <span class="material-symbols-outlined" slot="start"> data_saver_on </span>
+          <ion-label>Create channel</ion-label>
+        </ion-item>
+        <ion-item lines="none" [button]="true" routerLink="/settings" (click)="popover.dismiss()">
+          <span class="material-symbols-outlined" slot="start"> settings </span>
+          <ion-label>Settings</ion-label>
+        </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+
   <ion-list class="ion-margin-top">
     <ion-title>Status</ion-title>
-
     <ion-item lines="none">
       <ion-avatar slot="start">
         <img src="../../assets/u4.jpeg" alt="" />
@@ -96,7 +116,7 @@
     <ion-fab-button color="light" class="ion-margin-bottom" size="small">
       <ion-icon name="pencil-sharp" color="dark"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button
+    <ion-fab-button (click)="camera()"
       ><ion-icon name="camera-sharp" color="light"></ion-icon
     ></ion-fab-button>
   </ion-fab>

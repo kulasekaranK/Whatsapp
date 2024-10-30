@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar class="ION-PADDING">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
       <ion-button>
         <span class="material-symbols-outlined"> call </span>
       </ion-button>
-      <ion-button id="drop-down">
+      <ion-button (click)="openPopover($event)">
         <span class="material-symbols-outlined"> more_vert </span>
       </ion-button>
     </ion-buttons>
@@ -28,62 +28,100 @@
 </ion-header>
 
 <ion-content>
-  <ion-popover trigger="drop-down">
+  <ion-popover size="auto" #myPopover>
     <ng-template>
-      <ion-item lines="none" [button]="true">
-        <span class="material-symbols-outlined" slot="start"> contacts </span>
-        <ion-label>View contact</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" [button]="true">
-        <span class="material-symbols-outlined" slot="start"> search </span>
-        <ion-label>Search</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" [button]="true">
-        <span class="material-symbols-outlined" slot="start">
-          recent_actors
-        </span>
-        <ion-label>Add to list</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" [button]="true">
-        <span class="material-symbols-outlined" slot="start"> perm_media </span>
-        <ion-label>Media, links, and docs</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" [button]="true">
-        <span class="material-symbols-outlined" slot="start">
-          notifications_off
-        </span>
-        <ion-label>Mute notifications</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" [button]="true">
-        <span class="material-symbols-outlined" slot="start">
-          search_activity
-        </span>
-        <ion-label> Disappearing messages</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" [button]="true">
-        <span class="material-symbols-outlined" slot="start"> wallpaper </span>
-        <ion-label>Wallpaper</ion-label>
-      </ion-item>
-      <ion-item
-        id="more-drop-down"
-        lines="none"
-        [button]="true"
-        detail="true"
-        detail-icon="caret-forward-outline"
-      >
-        <ion-label>More</ion-label>
-      </ion-item>
+      <ion-content>
+        <ion-list>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start">
+              contacts
+            </span>
+            <ion-label>View contact</ion-label>
+          </ion-item>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start"> search </span>
+            <ion-label>Search</ion-label>
+          </ion-item>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start">
+              recent_actors
+            </span>
+            <ion-label>Add to list</ion-label>
+          </ion-item>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start">
+              perm_media
+            </span>
+            <ion-label>Media, links, and docs</ion-label>
+          </ion-item>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start">
+              notifications_off
+            </span>
+            <ion-label>Mute notifications</ion-label>
+          </ion-item>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start">
+              search_activity
+            </span>
+            <ion-label>Disappearing messages</ion-label>
+          </ion-item>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start">
+              wallpaper
+            </span>
+            <ion-label>Wallpaper</ion-label>
+          </ion-item>
+          <ion-item
+            [button]="true"
+            [detail]="true"
+            detail-icon="caret-forward-outline"
+            lines="none"
+            (click)="openNestedPopover($event)"
+          >
+            More
+          </ion-item>
+        </ion-list>
+      </ion-content>
     </ng-template>
   </ion-popover>
-  <ion-popover trigger="more-drop-down">
+
+  <ion-popover #nestedPopover side="top">
     <ng-template>
-      <ion-item lines="none" [button]="true"> </ion-item>
+      <ion-content>
+        <ion-list>
+          <ion-item [button]="true" lines="none">
+            <span class="material-symbols-outlined" slot="start">
+              thumb_down
+            </span>
+            <ion-label>Report</ion-label>
+          </ion-item>
+
+          <ion-item [button]="true" lines="none">
+            <span class="material-symbols-outlined" slot="start"> block </span>
+            <ion-label>Block</ion-label>
+          </ion-item>
+
+          <ion-item [button]="true" lines="none">
+            <span class="material-symbols-outlined" slot="start">
+              indeterminate_check_box
+            </span>
+            <ion-label>Clear chat</ion-label>
+          </ion-item>
+
+          <ion-item [button]="true" lines="none">
+            <span class="material-symbols-outlined" slot="start"> upload </span>
+            <ion-label>Export chat</ion-label>
+          </ion-item>
+
+          <ion-item [button]="true" lines="none">
+            <span class="material-symbols-outlined" slot="start">
+              perm_contact_calendar
+            </span>
+            <ion-label>Add shortcut</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
     </ng-template>
   </ion-popover>
 
@@ -91,26 +129,126 @@
     <ion-badge color="medium"> 25 July 2024</ion-badge><br />
     <ion-badge color="medium" class="ion-padding">
       <ion-text color="warning"
-        >Message and calls are end-to-end encrypted. <br />
-        No one outside of this chat, not even Whatsapp, <br />
+        ><ion-icon name="lock-closed-outline"></ion-icon> Message and calls are
+        end-to-end encrypted. <br />
+        No one outside of this chat, not even WhatsApp, <br />
         can read or listen to them. Tap to learn more.</ion-text
       >
     </ion-badge>
   </div>
+  <ion-popover trigger="attach-file" size="auto" class="attach-file">
+    <ng-template>
+      <ion-content>
+        <ion-grid class="ion-padding">
+          <ion-row>
+            <ion-col size="3" class="ion-text-center">
+              <ion-button fill="outline" color="success">
+                <span class="material-symbols-outlined gallery-icon">
+                  photo_library
+                </span></ion-button
+              ><br />
+              <ion-note> Gallery </ion-note>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined camera-icon">
+                photo_camera </span
+              >
+              </ion-button><br />
+              <ion-note> Camera </ion-note>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined location-icon">
+                location_on </span
+              >
+              </ion-button><br />
+              <ion-note> Location </ion-note>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined contact-icon">
+                person </span
+              >
+              </ion-button><br />
+              <ion-note> Contact </ion-note>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined document-icon">
+                description </span
+              >
+              </ion-button><br />
+              <ion-note> Document </ion-note>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined audio-icon">
+                headphones </span
+              >
+              </ion-button><br />
+              <ion-note> Audio </ion-note>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined poll-icon">
+                leaderboard </span
+              >
+              </ion-button><br />
+              <ion-note> Poll </ion-note>
+            </ion-col>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined payment-icon">
+                currency_rupee </span
+              >
+              </ion-button><br />
+              <ion-note> Payment </ion-note>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="3" class="ion-text-center">
+                <ion-button fill="outline" color="success">
+              <span class="material-symbols-outlined imagine-icon">
+                add_photo_alternate </span
+              >
+              </ion-button><br />
+              <ion-note>Imagine</ion-note>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
 </ion-content>
+
 <ion-footer class="ion-no-border">
   <ion-toolbar>
     <ion-grid>
       <ion-row class="ion-align-items-center">
         <ion-col size="10">
           <ion-item lines="none">
-            <ion-input placeholder="Message" class="ion-padding">
-              <div slot="label">
-                <span class="material-symbols-outlined" slot="start">
-                  mood
-                </span>
-              </div>
-            </ion-input>
+            <span class="material-symbols-outlined" slot="start"> mood </span>
+            <ion-input placeholder="Message"> </ion-input>
+            <ion-button fill="clear" id="attach-file">
+              <span class="material-symbols-outlined" slot="end">
+              attach_file
+            </span>
+            </ion-button>
+           <ion-button fill="clear">
+             <span class="material-symbols-outlined" slot="end">
+              currency_rupee
+            </span>
+           </ion-button>
+         <ion-button fill="clear" (click)="Camera()">
+             <span class="material-symbols-outlined" slot="end">
+              photo_camera
+            </span>
+         </ion-button>
           </ion-item>
         </ion-col>
         <ion-col size="2" class="ion-text-end">

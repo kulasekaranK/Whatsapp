@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -15,6 +15,7 @@ import {
   IonNote,
   IonFab,
   IonFabButton,
+  IonPopover,
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { addIcons } from 'ionicons';
@@ -32,6 +33,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CapacitorService } from '../services/capacitor.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -55,13 +58,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     IonNote,
     IonFab,
     IonFabButton,
-
     FormsModule,
     CommonModule,
+    IonPopover,
+    RouterLink
   ],
 })
 export class Tab2Page {
-  constructor() {
+  @ViewChild('popover') popover!: IonPopover;
+
+  constructor(private service: CapacitorService) {
     addIcons({
       cameraOutline,
       search,
@@ -70,6 +76,15 @@ export class Tab2Page {
       cameraSharp,
       chatbubbleEllipsesSharp,
     });
+  }
+
+  presentPopover(e: Event) {
+    this.popover.event = e;
+    this.popover.present();
+  }
+
+  camera() {
+    this.service.takePhoto();
   }
   channels = [
     {

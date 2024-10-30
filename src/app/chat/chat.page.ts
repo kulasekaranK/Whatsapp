@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Camera } from '@capacitor/camera';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonAvatar, IonBackButton, IonButtons, IonButton, IonChip, IonBadge, IonText, IonFooter, IonInput, IonItem, IonIcon, IonGrid, IonRow, IonCol, IonLabel, IonNote, IonPopover } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,IonSelect,IonSelectOption, IonAvatar, IonBackButton, IonButtons, IonButton, IonChip, IonBadge, IonText, IonFooter, IonInput, IonItem, IonIcon, IonGrid, IonRow, IonCol, IonLabel, IonNote, IonPopover, IonFab, IonList } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
+import { CapacitorService } from '../services/capacitor.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
   standalone: true,
-  imports: [IonPopover,
+  imports: [
+    IonList,
+    IonFab,
+    IonPopover,
     IonNote,
     IonLabel,
     IonCol,
@@ -32,13 +37,20 @@ import { ActivatedRoute } from '@angular/router';
     IonToolbar,
     CommonModule,
     FormsModule,
+    IonSelect,
+    IonSelectOption,
   ],
 })
 export class ChatPage implements OnInit {
+  @ViewChild('myPopover') myPopover!: IonPopover;
+  @ViewChild('nestedPopover') nestedPopover!: IonPopover;
+
   contactName: string | null = '';
   contactAvatar: string | null = '';
+  event!: Event;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,private service:CapacitorService) {}
+
   ngOnInit(): void {
     const nameFromRoute = this.route.snapshot.paramMap.get('name');
 
@@ -51,6 +63,19 @@ export class ChatPage implements OnInit {
         this.contactAvatar = matchedContact.avatar;
       }
     }
+  }
+
+  openPopover(event: MouseEvent) {
+    this.myPopover.event = event;
+    this.myPopover.present();
+  }
+  openNestedPopover(event: Event) {
+    this.myPopover.dismiss();
+    this.nestedPopover.event = event;
+    this.nestedPopover.present();
+  }
+  Camera(){
+    this.service.takePhoto()
   }
 
   contacts = [

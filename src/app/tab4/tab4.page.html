@@ -1,20 +1,38 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="ion-padding-top">
     <ion-title mode="md">Calls</ion-title>
-   <ion-buttons slot="end" mode="md">
-      <ion-button>
+    <ion-buttons slot="end" mode="md">
+      <ion-button (click)="camera()">
         <span class="material-symbols-outlined">camera_alt</span>
       </ion-button>
       <ion-button>
         <span class="material-symbols-outlined"> search </span>
       </ion-button>
-      <ion-button>
+      <ion-button (click)="presentPopover($event)">
         <span class="material-symbols-outlined">more_vert</span>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="ion-padding">
+  <ion-popover size="auto" #popover>
+    <ng-template>
+      <ion-content>
+        <ion-list>
+          <ion-item lines="none" [button]="true">
+            <span class="material-symbols-outlined" slot="start"> delete </span>
+            <ion-label>Clear call log</ion-label>
+          </ion-item>
+          <ion-item lines="none" [button]="true" (click)="popover.dismiss()" routerLink="/settings">
+            <span class="material-symbols-outlined" slot="start"> settings </span>
+            <ion-label>Settings</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+
   <ion-label>
     <h2>Favourites</h2>
   </ion-label>
@@ -120,7 +138,7 @@
         <h2>Afdeen(3)</h2>
         <p>
           <span class="material-symbols-outlined made-icon"> call_made </span>
-         1 August, 8:35 pm
+          1 August, 8:35 pm
         </p>
       </ion-label>
       <ion-icon name="videocam-outline" color="dark" slot="end"></ion-icon>
@@ -156,7 +174,7 @@
       <ion-icon name="videocam-outline" color="dark" slot="end"></ion-icon>
     </ion-item>
 
-     <ion-item lines="none">
+    <ion-item lines="none">
       <ion-avatar slot="start">
         <img src="../../assets/u4.jpeg" alt="" />
       </ion-avatar>
@@ -201,7 +219,7 @@
       </ion-label>
       <ion-icon name="call-outline" color="dark" slot="end"></ion-icon>
     </ion-item>
-      <ion-item lines="none">
+    <ion-item lines="none">
       <ion-avatar slot="start">
         <img src="../../assets/u7.jpeg" alt="" />
       </ion-avatar>
@@ -209,7 +227,7 @@
         <h2>Afdeen(3)</h2>
         <p>
           <span class="material-symbols-outlined made-icon"> call_made </span>
-         1 August, 8:35 pm
+          1 August, 8:35 pm
         </p>
       </ion-label>
       <ion-icon name="videocam-outline" color="dark" slot="end"></ion-icon>
@@ -244,20 +262,17 @@
       </ion-label>
       <ion-icon name="videocam-outline" color="dark" slot="end"></ion-icon>
     </ion-item>
-
-
   </ion-list>
 
-   <div class="ion-text-center">
-       <ion-note>
+  <div class="ion-text-center">
+    <ion-note>
       <span class="material-symbols-outlined" style="font-size: 16px"
         >lock</span
       >
       Your personal calls are
       <ion-text color="primary">end-to-end encrypted</ion-text>
     </ion-note>
-   </div>
-
+  </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button

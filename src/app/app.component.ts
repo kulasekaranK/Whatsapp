@@ -34,7 +34,6 @@ export class AppComponent {
       await StatusBar.setBackgroundColor({ color: '#101E29' });
       await StatusBar.setStyle({ style: Style.Dark });
     } else {
-
       await StatusBar.setBackgroundColor({ color: '#ffffff' });
      await StatusBar.setStyle({ style: Style.Light });
     }

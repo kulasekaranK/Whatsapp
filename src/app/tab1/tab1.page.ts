@@ -7,7 +7,9 @@ import {
   chatbubbleEllipsesSharp,
   lockClosedOutline,
   archiveOutline,
-  addSharp, checkmarkDoneOutline } from 'ionicons/icons';
+  addSharp,
+  checkmarkDoneOutline,
+} from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import lottie from 'lottie-web';
@@ -30,15 +32,20 @@ import {
   IonText,
   IonFab,
   IonFabButton,
-  IonPopover, IonIcon, IonInput } from '@ionic/angular/standalone';
-import {PopoverController} from '@ionic/angular'
+  IonPopover,
+  IonIcon,
+  IonInput,
+} from '@ionic/angular/standalone';
+import { PopoverController } from '@ionic/angular';
+import { CapacitorService } from '../services/capacitor.service';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   standalone: true,
-  imports: [IonInput,
+  imports: [
+    IonInput,
     IonIcon,
     IonPopover,
     IonFabButton,
@@ -67,7 +74,7 @@ export class Tab1Page implements AfterViewInit {
   @ViewChild('myPopover') myPopover!: IonPopover;
   selectedChip: string = 'All';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private service: CapacitorService) {
     addIcons({
       checkmarkDoneOutline,
       cameraOutline,
@@ -78,6 +85,9 @@ export class Tab1Page implements AfterViewInit {
       archiveOutline,
     });
   }
+  camera() {
+this.service.takePhoto();
+  }
 
   ngAfterViewInit(): void {
     lottie.loadAnimation({
@@ -87,6 +97,13 @@ export class Tab1Page implements AfterViewInit {
       autoplay: true,
       path: '../../assets/animation.json',
     });
+
+        lottie.loadAnimation({
+          container: document.getElementById('meta')!,
+          renderer: 'svg',
+          autoplay: false,
+          path: '../../assets/animation.json',
+        });
   }
 
   selectChip(chipName: string) {
